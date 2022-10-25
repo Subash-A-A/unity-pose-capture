@@ -7,13 +7,16 @@ public class PointAnimation : MonoBehaviour
 {
     [SerializeField] GameObject point;
     [SerializeField] Transform body;
-
+    
+    private LineManager lineManager;
     private List<string> lines;
     private int counter = 0;
 
     private void Start()
     {
         lines = System.IO.File.ReadLines("Assets/AnimationFile.txt").ToList();
+        lineManager = GetComponent<LineManager>();
+
         SetupPoints();
         AnimatePoints();
     }
@@ -50,7 +53,8 @@ public class PointAnimation : MonoBehaviour
         {
             counter = 0;
         }
-        
+
+        lineManager.DrawLines();
 
         Thread.Sleep(30);
     }
