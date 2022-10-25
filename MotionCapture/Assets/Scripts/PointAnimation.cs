@@ -5,6 +5,7 @@ using System.Threading;
 
 public class PointAnimation : MonoBehaviour
 {
+    [SerializeField] string animationFileName;
     [SerializeField] GameObject point;
     [SerializeField] Transform body;
     
@@ -14,7 +15,7 @@ public class PointAnimation : MonoBehaviour
 
     private void Start()
     {
-        lines = System.IO.File.ReadLines("Assets/AnimationFile.txt").ToList();
+        lines = System.IO.File.ReadLines("Assets/"+ animationFileName + ".txt").ToList();
         lineManager = GetComponent<LineManager>();
 
         SetupPoints();
