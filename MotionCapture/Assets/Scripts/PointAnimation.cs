@@ -5,6 +5,8 @@ using System.Threading;
 
 public class PointAnimation : MonoBehaviour
 {
+    public bool useCam = false;
+
     [SerializeField] string animationFileName;
     [SerializeField] GameObject point;
     [SerializeField] Transform body;
@@ -15,14 +17,19 @@ public class PointAnimation : MonoBehaviour
 
     private void Start()
     {
-        lines = System.IO.File.ReadLines("Assets/"+ animationFileName + ".txt").ToList();
+        lines = new List<string>();
+
+        if (!useCam)
+        {
+            lines = System.IO.File.ReadLines("Assets/"+ animationFileName + ".txt").ToList();
+        }
+
         lineManager = GetComponent<LineManager>();
 
         SetupPoints();
-        AnimatePoints();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         AnimatePoints();
     }
@@ -37,7 +44,7 @@ public class PointAnimation : MonoBehaviour
 
     private void AnimatePoints()
     {
-        string[] points = lines[counter].Split(',');
+        string[] points = (!useCam) ? lines[counter].Split(",") : UDPReceive.data.Split(",");
         
         for(int i = 0; i <= 32; i++)
         {   
